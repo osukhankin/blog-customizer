@@ -1,13 +1,46 @@
+import clsx from 'clsx';
+import { useEffect, useRef } from 'react';
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
 
 import styles from './ArticleParamsForm.module.scss';
 
-export const ArticleParamsForm = () => {
+type ArticleParamsFormProps = {
+	isOpen: boolean;
+	onToggle: () => void;
+	onClose: () => void;
+};
+
+export const ArticleParamsForm = ({
+	isOpen,
+	onToggle,
+	onClose,
+}: ArticleParamsFormProps) => {
+	const wrapperRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleMouseDown = (event: MouseEvent) => {
+			if (
+				wrapperRef.current &&
+				!wrapperRef.current.contains(event.target as Node)
+			) {
+				onClose();
+			}
+		};
+
+		document.addEventListener('mousedown', handleMouseDown);
+		return () => document.removeEventListener('mousedown', handleMouseDown);
+	}, [isOpen, onClose]);
+
 	return (
-		<>
-			<ArrowButton isOpen={false} onClick={() => {}} />
-			<aside className={styles.container}>
+		<div ref={wrapperRef}>
+			<ArrowButton isOpen={isOpen} onClick={onToggle} />
+			<aside
+				className={clsx(styles.container, {
+					[styles.container_open]: isOpen,
+				})}>
 				<form className={styles.form}>
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' htmlType='reset' type='clear' />
@@ -15,6 +48,6 @@ export const ArticleParamsForm = () => {
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };
