@@ -36,6 +36,11 @@ const App = () => {
 
 	const handleApply = () => setAppliedState(formState);
 
+	const handleReset = () => {
+		setFormState(defaultArticleState);
+		setAppliedState(defaultArticleState);
+	};
+
 	return (
 		<main
 			className={clsx(styles.main)}
@@ -59,6 +64,7 @@ const App = () => {
 				onBackgroundColorChange={handleBackgroundColorChange}
 				onContentWidthChange={handleContentWidthChange}
 				onApply={handleApply}
+				onReset={handleReset}
 			/>
 			<Article />
 		</main>

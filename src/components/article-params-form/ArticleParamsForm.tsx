@@ -27,6 +27,7 @@ type ArticleParamsFormProps = {
 	onBackgroundColorChange: (option: OptionType) => void;
 	onContentWidthChange: (option: OptionType) => void;
 	onApply: () => void;
+	onReset: () => void;
 };
 
 export const ArticleParamsForm = ({
@@ -40,6 +41,7 @@ export const ArticleParamsForm = ({
 	onBackgroundColorChange,
 	onContentWidthChange,
 	onApply,
+	onReset,
 }: ArticleParamsFormProps) => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -71,6 +73,10 @@ export const ArticleParamsForm = ({
 					onSubmit={(e) => {
 						e.preventDefault();
 						onApply();
+					}}
+					onReset={(e) => {
+						e.preventDefault();
+						onReset();
 					}}>
 					<Select
 						title='Шрифт'
