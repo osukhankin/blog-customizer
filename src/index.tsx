@@ -20,6 +20,8 @@ const App = () => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
+	const [appliedState, setAppliedState] =
+		useState<ArticleStateType>(defaultArticleState);
 
 	const handleFontFamilyChange = (option: OptionType) =>
 		setFormState((prev) => ({ ...prev, fontFamilyOption: option }));
@@ -32,16 +34,18 @@ const App = () => {
 	const handleContentWidthChange = (option: OptionType) =>
 		setFormState((prev) => ({ ...prev, contentWidth: option }));
 
+	const handleApply = () => setAppliedState(formState);
+
 	return (
 		<main
 			className={clsx(styles.main)}
 			style={
 				{
-					'--font-family': defaultArticleState.fontFamilyOption.value,
-					'--font-size': defaultArticleState.fontSizeOption.value,
-					'--font-color': defaultArticleState.fontColor.value,
-					'--container-width': defaultArticleState.contentWidth.value,
-					'--bg-color': defaultArticleState.backgroundColor.value,
+					'--font-family': appliedState.fontFamilyOption.value,
+					'--font-size': appliedState.fontSizeOption.value,
+					'--font-color': appliedState.fontColor.value,
+					'--container-width': appliedState.contentWidth.value,
+					'--bg-color': appliedState.backgroundColor.value,
 				} as CSSProperties
 			}>
 			<ArticleParamsForm
@@ -54,6 +58,7 @@ const App = () => {
 				onFontColorChange={handleFontColorChange}
 				onBackgroundColorChange={handleBackgroundColorChange}
 				onContentWidthChange={handleContentWidthChange}
+				onApply={handleApply}
 			/>
 			<Article />
 		</main>

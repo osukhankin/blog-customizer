@@ -26,6 +26,7 @@ type ArticleParamsFormProps = {
 	onFontColorChange: (option: OptionType) => void;
 	onBackgroundColorChange: (option: OptionType) => void;
 	onContentWidthChange: (option: OptionType) => void;
+	onApply: () => void;
 };
 
 export const ArticleParamsForm = ({
@@ -38,6 +39,7 @@ export const ArticleParamsForm = ({
 	onFontColorChange,
 	onBackgroundColorChange,
 	onContentWidthChange,
+	onApply,
 }: ArticleParamsFormProps) => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -64,7 +66,12 @@ export const ArticleParamsForm = ({
 				className={clsx(styles.container, {
 					[styles.container_open]: isOpen,
 				})}>
-				<form className={styles.form}>
+				<form
+					className={styles.form}
+					onSubmit={(e) => {
+						e.preventDefault();
+						onApply();
+					}}>
 					<Select
 						title='Шрифт'
 						selected={formState.fontFamilyOption}
